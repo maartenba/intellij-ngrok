@@ -1,0 +1,49 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>be.maartenballiauw.intellij.plugins.ngrok</id>
+    <name>ngrok</name>
+    <vendor>Maarten Balliauw and Contributors</vendor>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="be.maartenballiauw.intellij.plugins.ngrok.service.NGrokService"/>
+
+        <serviceViewContributor implementation="be.maartenballiauw.intellij.plugins.ngrok.service.NGrokServiceViewContributor" />
+
+        <projectService serviceImplementation="be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettings" />
+        <projectConfigurable
+                parentId="tools"
+                id="Settings.Plugins.NGrok"
+                instance="be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettingsConfigurable"
+                displayName="ngrok"
+                nonDefaultProject="false"/>
+    </extensions>
+
+    <actions>
+        <group id="NGrok.NGrokGroup"
+               class="com.intellij.openapi.actionSystem.DefaultActionGroup"
+               text="Ngrok Tunnel"
+               description="Contains ngrok actions">
+
+            <action id="NGrok.StartNGrok"
+                    class="be.maartenballiauw.intellij.plugins.ngrok.actions.StartNGrokAction"
+                    text="Start Ngrok"
+                    description="Start ngrok tunnel"
+                    icon="AllIcons.Actions.Execute">
+            </action>
+
+            <action id="NGrok.StopNGrok"
+                    class="be.maartenballiauw.intellij.plugins.ngrok.actions.StopNGrokAction"
+                    text="Stop Ngrok"
+                    description="Stop ngrok tunnel"
+                    icon="AllIcons.Actions.Suspend">
+            </action>
+
+            <action id="NGrok.ShowSettings"
+                    class="be.maartenballiauw.intellij.plugins.ngrok.actions.ShowNGrokSettingsAction"
+                    text="Ngrok Settings"
+                    description="Show ngrok settings"
+                    icon="AllIcons.Actions.EditSource">
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
