@@ -1,5 +1,9 @@
 # ngrok
 
+> **THIS REPOSITORY HAS BEEN ABANDONED**
+> It's a great idea, but it serves more attention than just creating a simple proof-of-concept.
+> A good description of the initial idea was posted as an "up for grabs" here - https://youtrack.jetbrains.com/issue/IDEA-293113
+
 <!-- Plugin description -->
 TODO describe plugin
 
