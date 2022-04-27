@@ -13,9 +13,5 @@ class ShowNGrokSettingsAction
     AllIcons.Actions.EditSource
 ) {
 
-    override fun actionPerformed(e: AnActionEvent) {
-        val project = e.project ?: return
-
-        NGrokSettingsConfigurable.showSettings(project)
-    }
+    override fun actionPerformed(e: AnActionEvent) = NGrokSettingsConfigurable.showSettings()
 }

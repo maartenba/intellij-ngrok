@@ -10,7 +10,7 @@ class NGrokSettings : SimplePersistentStateComponent<NGrokSettingsState>(NGrokSe
         //const val defaultArguments = "http https://localhost:5001"
 
         @JvmStatic
-        fun getInstance(): NGrokSettings = application.getService(NGrokSettings::class.java)
+        fun getInstance(): NGrokSettings = service()
     }
 
     var executablePath

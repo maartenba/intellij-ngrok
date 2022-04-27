@@ -18,6 +18,7 @@ import be.maartenballiauw.intellij.plugins.ngrok.NGrokBundle
 import be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettings
 import be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettingsConfigurable
 import be.maartenballiauw.intellij.plugins.ngrok.service.NGrokService
+import com.intellij.openapi.util.Disposer
 
 class StartNGrokAction
     : AnAction(
@@ -25,16 +26,10 @@ class StartNGrokAction
     NGrokBundle.message("action.ngrok.start.description"),
     AllIcons.Actions.Execute) {
 
-    companion object {
-        private const val NGROK_PROCESS_TIMEOUT_MILLIS = 15000
-    }
-
     private val logger = Logger.getInstance(StartNGrokAction::class.java)
     private val ngrokService = service<NGrokService>()
 
     override fun update(e: AnActionEvent) {
-        val project = e.project ?: return
-
         if (ngrokService.isRunning) {
             e.presentation.isEnabled = false
             return
@@ -77,6 +72,10 @@ class StartNGrokAction
                         if (indicator.isCanceled) return@runWriteAction
 
                         ngrokService.start(commandLine)
+
+                        Disposer.register(application) {
+                            ngrokService.stop()
+                        }
                     }
                 }
             }

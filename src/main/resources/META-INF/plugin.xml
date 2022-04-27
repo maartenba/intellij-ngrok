@@ -4,6 +4,8 @@
     <name>ngrok</name>
     <vendor>Maarten Balliauw and Contributors</vendor>
 
+    <depends>com.intellij.modules.platform</depends>
+
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="be.maartenballiauw.intellij.plugins.ngrok.service.NGrokService"/>
 
