@@ -9,13 +9,21 @@
 
         <serviceViewContributor implementation="be.maartenballiauw.intellij.plugins.ngrok.service.NGrokServiceViewContributor" />
 
-        <projectService serviceImplementation="be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettings" />
-        <projectConfigurable
+        <applicationService serviceImplementation="be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettings" />
+        <applicationConfigurable
                 parentId="tools"
                 id="Settings.Plugins.NGrok"
-                instance="be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettingsConfigurable"
-                displayName="ngrok"
-                nonDefaultProject="false"/>
+                instance="be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettingsConfigurable"
+                bundle="messages.NGrokBundle"
+                key="ngrok.settings.name"/>
+
+        <projectConfigurable
+                parentId="Settings.Plugins.NGrok"
+                id="Settings.Plugins.NGrok.Project"
+                instance="be.maartenballiauw.intellij.plugins.ngrok.configuration.project.NGrokProjectSettingsConfigurable"
+                bundle="messages.NGrokBundle"
+                key="ngrok.settings.project.name"
+                nonDefaultProject="true"/>
     </extensions>
 
     <actions>

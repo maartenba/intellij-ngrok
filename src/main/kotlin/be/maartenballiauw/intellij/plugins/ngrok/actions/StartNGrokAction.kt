@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 package be.maartenballiauw.intellij.plugins.ngrok.actions
 
 import com.intellij.execution.configurations.GeneralCommandLine
@@ -12,10 +14,9 @@ import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
 import com.intellij.util.EnvironmentUtil
-import com.intellij.util.execution.ParametersListUtil
 import be.maartenballiauw.intellij.plugins.ngrok.NGrokBundle
-import be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettings
-import be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettingsConfigurable
+import be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettings
+import be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettingsConfigurable
 import be.maartenballiauw.intellij.plugins.ngrok.service.NGrokService
 
 class StartNGrokAction
@@ -39,7 +40,7 @@ class StartNGrokAction
             return
         }
 
-        val settings = NGrokSettings.getInstance(project)
+        val settings = NGrokSettings.getInstance()
         e.presentation.isEnabled = !settings.executablePath.isNullOrEmpty()
     }
 
@@ -50,14 +51,13 @@ class StartNGrokAction
             return
         }
 
-        val settings = NGrokSettings.getInstance(project)
+        val settings = NGrokSettings.getInstance()
         if (settings.executablePath.isNullOrEmpty()) {
-            NGrokSettingsConfigurable.showSettings(project)
+            NGrokSettingsConfigurable.showSettings()
             return
         }
 
         logger.info("ngrok executable: ${settings.executablePath}")
-        logger.info("ngrok arguments: ${settings.arguments}")
 
         val application = ApplicationManager.getApplication()
 
@@ -68,16 +68,11 @@ class StartNGrokAction
                 application.invokeLaterOnWriteThread {
                     application.runWriteAction {
                         val commandLine = GeneralCommandLine(settings.executablePath)
-
-                        val argumentsList = ParametersListUtil.parse(settings.arguments ?: "")
-                        commandLine.parametersList.addAll(argumentsList)
-
-                        if (!argumentsList.contains("--log")) {
-                            commandLine.parametersList.add("--log")
-                            commandLine.parametersList.add("stdout")
-                        }
-
+                        commandLine.addParameters("start", "--none", "--log", "stdout")
                         commandLine.environment.putAll(EnvironmentUtil.getEnvironmentMap())
+                        settings.authToken?.let {
+                            commandLine.environment.put("NGROK_AUTHTOKEN", it)
+                        }
 
                         if (indicator.isCanceled) return@runWriteAction
 

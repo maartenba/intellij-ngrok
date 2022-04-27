@@ -1,8 +1,8 @@
-package be.maartenballiauw.intellij.plugins.ngrok.configuration
+package be.maartenballiauw.intellij.plugins.ngrok.configuration.application
 
 import com.intellij.openapi.components.BaseState
 
 class NGrokSettingsState : BaseState() {
     var executablePath by string()
-    var arguments by string(NGrokSettings.defaultArguments)
+    var authToken by string()
 }

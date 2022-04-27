@@ -4,7 +4,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import be.maartenballiauw.intellij.plugins.ngrok.NGrokBundle
-import be.maartenballiauw.intellij.plugins.ngrok.configuration.NGrokSettingsConfigurable
+import be.maartenballiauw.intellij.plugins.ngrok.configuration.application.NGrokSettingsConfigurable
 
 class ShowNGrokSettingsAction
     : AnAction(
